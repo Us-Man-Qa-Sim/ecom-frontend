@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { QueryProvider } from '@/components/query-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { publicEnv } from '@/env';
+import { CartHydrator } from '@/features/cart/cart-hydrator';
 import './globals.css';
 
 const geistSans = Geist({ variable: '--font-sans', subsets: ['latin'] });
@@ -33,7 +35,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          <QueryProvider>{children}</QueryProvider>
+          <NuqsAdapter>
+            <QueryProvider>{children}</QueryProvider>
+          </NuqsAdapter>
+          <CartHydrator />
           <Toaster richColors closeButton />
         </ThemeProvider>
       </body>
