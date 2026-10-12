@@ -5,13 +5,13 @@ import {
   addLine,
   cartCount,
   cartSubtotal,
-  parseStoredLines,
   reconcileCart,
   removeLine,
   setLineQuantity,
   type CartLine,
   type LiveProduct,
 } from './cart';
+import { parseStoredLines } from './cart-schema';
 
 const id = (n: number) => n.toString(16).padStart(24, '0');
 const usd = (amountMinor: number) => ({ amountMinor, currency: 'USD' });

@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { multiplyMoney, sumMoney, type Money } from '@/lib/money';
 
 // Pure cart logic (FD10). The store, the cart page and the tests all use these
@@ -9,34 +8,8 @@ import { multiplyMoney, sumMoney, type Money } from '@/lib/money';
 export const MAX_CART_LINES = 100;
 export const MAX_LINE_QUANTITY = 10_000;
 
-const moneySchema = z.object({
-  amountMinor: z.number().int().nonnegative(),
-  currency: z.string().length(3),
-});
-
-export const cartLineSchema = z.object({
-  productId: z.string().regex(/^[0-9a-f]{24}$/i),
-  quantity: z.number().int().min(1).max(MAX_LINE_QUANTITY),
-  snapshot: z.object({
-    name: z.string().min(1).max(200),
-    price: moneySchema,
-    image: z.string().max(2000).nullable(),
-  }),
-});
-
-export const cartLinesSchema = z.array(cartLineSchema).max(MAX_CART_LINES);
-
-export type CartLine = z.infer<typeof cartLineSchema>;
-export type CartSnapshot = CartLine['snapshot'];
-
-/** Anything that is not a valid cart (old version, edited by hand, corrupted) becomes an empty cart. */
-export function parseStoredLines(value: unknown): CartLine[] {
-  const parsed = cartLinesSchema.safeParse(value);
-  if (!parsed.success) return [];
-  // Drop duplicate product ids, keeping the first.
-  const seen = new Set<string>();
-  return parsed.data.filter((line) => !seen.has(line.productId) && seen.add(line.productId));
-}
+export type CartSnapshot = { name: string; price: Money; image: string | null };
+export type CartLine = { productId: string; quantity: number; snapshot: CartSnapshot };
 
 export type AddFailure = 'mixed-currency' | 'too-many-lines' | 'max-quantity';
 export type AddResult = { ok: true; lines: CartLine[] } | { ok: false; reason: AddFailure };

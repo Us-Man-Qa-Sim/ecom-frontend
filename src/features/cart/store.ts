@@ -4,7 +4,6 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import {
   addLine,
-  parseStoredLines,
   removeLine,
   setLineQuantity,
   type AddResult,
@@ -13,6 +12,18 @@ import {
 } from './cart';
 
 export const CART_STORAGE_KEY = 'ecom.cart.v1';
+
+type CartValidator = (value: unknown) => CartLine[];
+let validateStoredLines: CartValidator | undefined;
+
+/**
+ * The zod validator lives in `cart-schema.ts` and is loaded on demand, so it
+ * is handed in here before the first rehydration. Without it nothing from
+ * localStorage is accepted.
+ */
+export function setCartValidator(validator: CartValidator) {
+  validateStoredLines = validator;
+}
 
 type CartState = {
   lines: CartLine[];
@@ -51,7 +62,8 @@ export const useCartStore = create<CartState>()(
       // Stored data is never trusted: it is validated with zod, bad data means an empty cart.
       merge: (persisted, current) => ({
         ...current,
-        lines: parseStoredLines((persisted as { lines?: unknown } | undefined)?.lines),
+        lines:
+          validateStoredLines?.((persisted as { lines?: unknown } | undefined)?.lines) ?? [],
       }),
       migrate: (persisted) => persisted as { lines: CartLine[] },
       onRehydrateStorage: () => () => {

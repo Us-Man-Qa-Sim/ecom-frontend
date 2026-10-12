@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { CART_STORAGE_KEY, useCartStore } from './store';
+import { parseStoredLines } from './cart-schema';
+import { CART_STORAGE_KEY, setCartValidator, useCartStore } from './store';
 
 const productId = 'a'.repeat(24);
 const item = {
@@ -8,6 +9,7 @@ const item = {
 };
 
 beforeEach(() => {
+  setCartValidator(parseStoredLines);
   localStorage.clear();
   useCartStore.setState({ lines: [], hydrated: false });
 });

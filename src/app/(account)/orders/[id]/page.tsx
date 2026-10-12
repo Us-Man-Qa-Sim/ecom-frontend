@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import { ListSkeleton } from '@/components/page-skeleton';
+import { QueryProvider } from '@/components/query-provider';
 import { getOrder } from '@/features/orders/data';
 import { OrderDetails } from '@/features/orders/order-details';
 import { OrderLive } from '@/features/orders/order-live';
@@ -46,7 +47,9 @@ async function OrderContent({ params }: Pick<PageProps<'/orders/[id]'>, 'params'
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
         <OrderDetails order={order} />
         <div className="lg:order-last">
-          <OrderLive order={order} />
+          <QueryProvider>
+            <OrderLive order={order} />
+          </QueryProvider>
         </div>
       </div>
     </>

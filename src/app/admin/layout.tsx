@@ -30,7 +30,7 @@ export default function AdminLayout({ children }: LayoutProps<'/admin'>) {
             <SectionNav items={[...NAV]} label="Admin" />
           </Suspense>
         </aside>
-        <main className="min-w-0">
+        <main id="main" tabIndex={-1} className="min-w-0 outline-none">
           <Suspense fallback={<ListSkeleton rows={3} label="Loading admin" />}>
             <AdminGate>{children}</AdminGate>
           </Suspense>

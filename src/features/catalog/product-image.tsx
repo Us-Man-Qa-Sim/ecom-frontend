@@ -36,8 +36,8 @@ export function ProductImage({ src, alt, sizes, priority = false, className }: P
         />
       ) : (
         <div
-          role="img"
-          aria-label={alt}
+          // Decorative images (alt="") stay out of the accessibility tree.
+          {...(alt ? { role: 'img', 'aria-label': alt } : { 'aria-hidden': true })}
           className="absolute inset-0 flex items-center justify-center text-muted-foreground/60"
           data-testid="image-placeholder"
         >

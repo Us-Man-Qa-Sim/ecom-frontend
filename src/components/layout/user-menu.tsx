@@ -12,10 +12,15 @@ export async function UserMenu() {
     return (
       <div className="flex items-center gap-1">
         <Button asChild variant="ghost" size="sm">
-          <Link href="/login">Log in</Link>
+          {/* No prefetch: the form bundle is only needed by people who log in. */}
+          <Link href="/login" prefetch={false}>
+            Log in
+          </Link>
         </Button>
         <Button asChild size="sm" className="hidden sm:inline-flex">
-          <Link href="/register">Sign up</Link>
+          <Link href="/register" prefetch={false}>
+            Sign up
+          </Link>
         </Button>
       </div>
     );

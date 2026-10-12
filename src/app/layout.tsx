@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import { QueryProvider } from '@/components/query-provider';
+import { LazyToaster } from '@/components/lazy-toaster';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/sonner';
 import { publicEnv } from '@/env';
 import { CartHydrator } from '@/features/cart/cart-hydrator';
 import './globals.css';
@@ -34,12 +32,16 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <a
+          href="#main"
+          className="bg-background text-foreground sr-only z-50 rounded-md border px-3 py-2 text-sm focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        >
+          Skip to content
+        </a>
         <ThemeProvider>
-          <NuqsAdapter>
-            <QueryProvider>{children}</QueryProvider>
-          </NuqsAdapter>
+          {children}
           <CartHydrator />
-          <Toaster richColors closeButton />
+          <LazyToaster />
         </ThemeProvider>
       </body>
     </html>

@@ -2,7 +2,7 @@
 
 import { EllipsisVerticalIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useId, useState, useTransition } from 'react';
+import { useId, useRef, useState, useTransition, type RefObject } from 'react';
 import { toast } from 'sonner';
 import { FormAlert } from '@/components/form/form-alert';
 import { Button } from '@/components/ui/button';
@@ -33,6 +33,7 @@ type Open = 'stock' | 'delete' | null;
 export function ProductRowActions({ product }: { product: Product }) {
   const [open, setOpen] = useState<Open>(null);
   const [pending, startTransition] = useTransition();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const setActive = (isActive: boolean) =>
     startTransition(async () => {
@@ -45,7 +46,12 @@ export function ProductRowActions({ product }: { product: Product }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label={`Actions for ${product.name}`}>
+          <Button
+            ref={menuButtonRef}
+            variant="ghost"
+            size="icon"
+            aria-label={`Actions for ${product.name}`}
+          >
             <EllipsisVerticalIcon />
           </Button>
         </DropdownMenuTrigger>
@@ -65,17 +71,39 @@ export function ProductRowActions({ product }: { product: Product }) {
       </DropdownMenu>
 
       {open === 'stock' ? (
-        <AdjustStockDialog product={product} onClose={() => setOpen(null)} />
+        <AdjustStockDialog
+          product={product}
+          onClose={() => setOpen(null)}
+          returnFocusRef={menuButtonRef}
+        />
       ) : null}
       {open === 'delete' ? (
-        <DeleteProductDialog product={product} onClose={() => setOpen(null)} />
+        <DeleteProductDialog
+          product={product}
+          onClose={() => setOpen(null)}
+          returnFocusRef={menuButtonRef}
+        />
       ) : null}
     </>
   );
 }
 
 /** Signed delta with a preview of the result (ADM-5). */
-export function AdjustStockDialog({ product, onClose }: { product: Product; onClose: () => void }) {
+type RowDialogProps = {
+  product: Product;
+  onClose: () => void;
+  /** The row's menu button. Focus returns to it when the dialog closes. */
+  returnFocusRef?: RefObject<HTMLButtonElement | null>;
+};
+
+function returnFocus(ref: RowDialogProps['returnFocusRef']) {
+  return (event: Event) => {
+    event.preventDefault();
+    ref?.current?.focus();
+  };
+}
+
+export function AdjustStockDialog({ product, onClose, returnFocusRef }: RowDialogProps) {
   const [input, setInput] = useState('');
   const [error, setError] = useState<ActionError>();
   const [pending, startTransition] = useTransition();
@@ -106,7 +134,7 @@ export function AdjustStockDialog({ product, onClose }: { product: Product; onCl
 
   return (
     <Dialog open onOpenChange={(next) => !next && onClose()}>
-      <DialogContent>
+      <DialogContent onCloseAutoFocus={returnFocus(returnFocusRef)}>
         <DialogHeader>
           <DialogTitle>Adjust stock</DialogTitle>
           <DialogDescription>{product.name}</DialogDescription>
@@ -166,7 +194,7 @@ export function AdjustStockDialog({ product, onClose }: { product: Product; onCl
 }
 
 /** Hard delete behind a typed confirmation (ADM-4). */
-export function DeleteProductDialog({ product, onClose }: { product: Product; onClose: () => void }) {
+export function DeleteProductDialog({ product, onClose, returnFocusRef }: RowDialogProps) {
   const [typed, setTyped] = useState('');
   const [error, setError] = useState<ActionError>();
   const [pending, startTransition] = useTransition();
@@ -197,7 +225,7 @@ export function DeleteProductDialog({ product, onClose }: { product: Product; on
 
   return (
     <Dialog open onOpenChange={(next) => !next && onClose()}>
-      <DialogContent>
+      <DialogContent onCloseAutoFocus={returnFocus(returnFocusRef)}>
         <DialogHeader>
           <DialogTitle>Delete “{product.name}”?</DialogTitle>
           <DialogDescription>

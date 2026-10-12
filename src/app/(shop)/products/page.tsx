@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Suspense } from 'react';
 import { PaginationNav } from '@/components/pagination-nav';
 import { CatalogFilters } from '@/features/catalog/catalog-filters';
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 
 export default function ProductsPage({ searchParams }: PageProps<'/products'>) {
   return (
+    <NuqsAdapter>
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between gap-2">
         <h1 className="text-2xl font-semibold tracking-tight">Products</h1>
@@ -41,6 +43,7 @@ export default function ProductsPage({ searchParams }: PageProps<'/products'>) {
         </section>
       </div>
     </div>
+    </NuqsAdapter>
   );
 }
 

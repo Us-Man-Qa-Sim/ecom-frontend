@@ -12,6 +12,7 @@ import { routeAccess } from '@/lib/auth/routes';
 import { loginPathWithNext, safeNextPath } from '@/lib/auth/safe-next';
 import { verifyAccessToken } from '@/lib/auth/verify';
 import { REQUEST_ID_HEADER } from '@/lib/request-id';
+import { securityHeaders } from '@/lib/security-headers';
 
 /** Refresh when the access token has less than this left (FD3). */
 const REFRESH_WINDOW_SECONDS = 60;
@@ -78,6 +79,12 @@ export async function proxy(request: NextRequest) {
     response.cookies.set(name, value, options);
   }
   response.headers.set(REQUEST_ID_HEADER, requestId);
+  const security = securityHeaders({
+    imageHosts: env.IMAGE_HOSTS,
+    https: env.COOKIE_SECURE,
+    development: process.env.NODE_ENV === 'development',
+  });
+  for (const [name, value] of Object.entries(security)) response.headers.set(name, value);
   return response;
 }
 

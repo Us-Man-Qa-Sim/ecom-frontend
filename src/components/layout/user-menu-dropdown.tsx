@@ -1,83 +1,58 @@
 'use client';
 
-import {
-  LayoutDashboardIcon,
-  LogOutIcon,
-  MapPinIcon,
-  PackageIcon,
-  UserIcon,
-  UserRoundIcon,
-} from 'lucide-react';
-import Link from 'next/link';
-import { useTransition } from 'react';
+import { UserRoundIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { useState, type ComponentProps } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { logoutAction } from '@/features/auth/actions';
 
 type Props = { name: string; firstName: string; email: string; isAdmin: boolean };
 
-export function UserMenuDropdown({ name, firstName, email, isAdmin }: Props) {
-  const [pending, startTransition] = useTransition();
+const loadContent = () => import('./user-menu-content');
 
+function Trigger({ name, firstName, ...props }: ComponentProps<typeof Button> & Pick<Props, 'name' | 'firstName'>) {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" aria-label={`Account menu for ${name}`}>
-          <UserRoundIcon className="size-5" />
-          <span className="hidden max-w-32 truncate sm:inline" data-testid="user-name">
-            {firstName}
-          </span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col">
-          <span className="truncate font-medium text-foreground">{name}</span>
-          <span className="truncate text-xs font-normal text-muted-foreground">{email}</span>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/orders">
-            <PackageIcon /> Orders
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/account">
-            <UserIcon /> Account
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/account/addresses">
-            <MapPinIcon /> Addresses
-          </Link>
-        </DropdownMenuItem>
-        {isAdmin ? (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/admin">
-                <LayoutDashboardIcon /> Admin
-              </Link>
-            </DropdownMenuItem>
-          </>
-        ) : null}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          disabled={pending}
-          onSelect={(event) => {
-            event.preventDefault();
-            startTransition(() => logoutAction());
-          }}
-        >
-          <LogOutIcon /> {pending ? 'Logging out…' : 'Log out'}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      variant="ghost"
+      size="sm"
+      aria-label={`Account menu for ${name}`}
+      aria-haspopup="menu"
+      {...props}
+    >
+      <UserRoundIcon className="size-5" />
+      <span className="hidden max-w-32 truncate sm:inline" data-testid="user-name">
+        {firstName}
+      </span>
+    </Button>
+  );
+}
+
+/** Account button. The dropdown is fetched on the first hover, focus or click (UX-5). */
+export function UserMenuDropdown({ name, firstName, email, isAdmin }: Props) {
+  const [opened, setOpened] = useState(false);
+  const [UserMenuContent] = useState(() =>
+    dynamic(loadContent, {
+      ssr: false,
+      loading: () => <Trigger name={name} firstName={firstName} />,
+    }),
+  );
+
+  if (opened) {
+    return (
+      <UserMenuContent
+        trigger={<Trigger name={name} firstName={firstName} />}
+        name={name}
+        email={email}
+        isAdmin={isAdmin}
+      />
+    );
+  }
+  return (
+    <Trigger
+      name={name}
+      firstName={firstName}
+      onPointerEnter={() => void loadContent()}
+      onFocus={() => void loadContent()}
+      onClick={() => setOpened(true)}
+    />
   );
 }

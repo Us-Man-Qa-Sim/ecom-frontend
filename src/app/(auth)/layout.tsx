@@ -11,7 +11,7 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
         </Link>
         <ThemeToggle />
       </header>
-      <main className="flex flex-1 items-start justify-center px-4 py-6 sm:items-center sm:py-10">
+      <main id="main" tabIndex={-1} className="flex flex-1 items-start justify-center px-4 py-6 sm:items-center sm:py-10">
         <div className="w-full max-w-md">{children}</div>
       </main>
     </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { ListSkeleton } from '@/components/page-skeleton';
+import { QueryProvider } from '@/components/query-provider';
 import { listAddresses } from '@/features/account/data';
 import { CheckoutView } from '@/features/checkout/checkout-view';
 import { requireSession } from '@/lib/auth/session';
@@ -21,5 +22,9 @@ export default function CheckoutPage() {
 async function Checkout() {
   // A guest is sent to /login?next=/checkout by proxy.ts. The cart stays in localStorage (CHK-1).
   await requireSession('/checkout');
-  return <CheckoutView addresses={await listAddresses()} />;
+  return (
+    <QueryProvider>
+      <CheckoutView addresses={await listAddresses()} />
+    </QueryProvider>
+  );
 }
