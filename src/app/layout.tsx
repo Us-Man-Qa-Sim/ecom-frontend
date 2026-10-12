@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { QueryProvider } from '@/components/query-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { publicEnv } from '@/env';
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          {children}
+          <QueryProvider>{children}</QueryProvider>
           <Toaster richColors closeButton />
         </ThemeProvider>
       </body>
