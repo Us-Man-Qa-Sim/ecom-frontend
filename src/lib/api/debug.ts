@@ -11,12 +11,13 @@ export type GatewayDebugInfo = {
   at: string;
 };
 
-let last: GatewayDebugInfo | null = null;
+// On `globalThis`: `use cache` functions and route handlers do not share module state.
+const store = globalThis as typeof globalThis & { __ecomLastGatewayCall?: GatewayDebugInfo };
 
 export function recordGatewayCall(info: GatewayDebugInfo) {
-  last = info;
+  store.__ecomLastGatewayCall = info;
 }
 
 export function lastGatewayCall(): GatewayDebugInfo | null {
-  return last;
+  return store.__ecomLastGatewayCall ?? null;
 }
