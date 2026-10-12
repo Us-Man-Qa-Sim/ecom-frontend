@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { field, login, logout, newUser, register } from './helpers';
+import { authSlot, field, login, logout, newUser, register } from './helpers';
 
 test.describe('auth', () => {
   test('register logs the user in, and logout and login work', async ({ page, context }) => {
@@ -35,6 +35,7 @@ test.describe('auth', () => {
     await page.goto('/account');
     await expect(page).toHaveURL('/login?next=%2Faccount');
 
+    await authSlot(2);
     await page.getByRole('link', { name: 'Create an account' }).click();
     await expect(page).toHaveURL('/register?next=%2Faccount');
     await field(page, 'First name').fill(user.firstName);
@@ -47,6 +48,7 @@ test.describe('auth', () => {
   });
 
   test('wrong password and short password show clear errors', async ({ page }) => {
+    await authSlot();
     await page.goto('/login');
     await field(page, 'Email').fill('nobody@example.com');
     await field(page, 'Password').fill('definitely-wrong-password');

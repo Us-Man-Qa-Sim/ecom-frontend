@@ -1,4 +1,33 @@
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { expect, type Page } from '@playwright/test';
+
+export const ADMIN = {
+  email: process.env.E2E_ADMIN_EMAIL ?? 'admin@example.com',
+  password: process.env.E2E_ADMIN_PASSWORD ?? 'admin-password-for-dev-only',
+};
+
+// The gateway allows 10 /auth/* calls per minute for the whole site (GAP-2:
+// every call comes from the Next.js server IP). The tests stay under it by
+// waiting here before each call. The log is a file so it survives worker restarts.
+const AUTH_LOG = join(tmpdir(), 'ecom-e2e-auth-calls.json');
+const AUTH_LIMIT = 8;
+const AUTH_WINDOW_MS = 62_000;
+
+export async function authSlot(calls = 1) {
+  for (;;) {
+    const now = Date.now();
+    const recent: number[] = (
+      existsSync(AUTH_LOG) ? (JSON.parse(readFileSync(AUTH_LOG, 'utf8')) as number[]) : []
+    ).filter((at) => now - at < AUTH_WINDOW_MS);
+    if (recent.length + calls <= AUTH_LIMIT) {
+      writeFileSync(AUTH_LOG, JSON.stringify([...recent, ...Array<number>(calls).fill(now)]));
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+}
 
 export const PASSWORD = 'correct-horse-battery-staple';
 
@@ -13,6 +42,7 @@ export function newUser(prefix?: string): TestUser {
 }
 
 export async function register(page: Page, user: TestUser, next?: string) {
+  await authSlot(2); // register + login
   await page.goto(next ? `/register?next=${encodeURIComponent(next)}` : '/register');
   await field(page, 'First name').fill(user.firstName);
   await field(page, 'Last name').fill(user.lastName);
@@ -23,6 +53,7 @@ export async function register(page: Page, user: TestUser, next?: string) {
 }
 
 export async function login(page: Page, email: string, password: string) {
+  await authSlot();
   await page.goto('/login');
   await field(page, 'Email').fill(email);
   await field(page, 'Password').fill(password);
