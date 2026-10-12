@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   typedRoutes: true,
   poweredByHeader: false,
+  // The dev log prints Server Function arguments, which include passwords.
+  logging: { serverFunctions: false },
   images: {
     // Built from IMAGE_HOSTS at build time (FD11).
     remotePatterns: env.IMAGE_HOSTS.flatMap((hostname) => [
