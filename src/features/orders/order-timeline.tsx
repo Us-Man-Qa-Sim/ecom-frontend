@@ -20,11 +20,11 @@ export function OrderTimeline({ status }: { status: OrderStatus | null }) {
               <span
                 className={cn(
                   'flex size-6 shrink-0 items-center justify-center rounded-full border text-xs',
-                  step.state === 'done' && 'bg-primary text-primary-foreground border-primary',
+                  step.state === 'done' && 'border-primary bg-primary text-primary-foreground',
                   step.state === 'current' && 'border-primary text-primary',
                   step.state === 'upcoming' && 'text-muted-foreground',
                   step.state === 'cancelled' &&
-                    'bg-destructive/10 text-destructive border-destructive/40',
+                    'border-destructive/40 bg-destructive/10 text-destructive',
                 )}
                 aria-hidden
               >
@@ -36,7 +36,10 @@ export function OrderTimeline({ status }: { status: OrderStatus | null }) {
               </span>
               {last ? null : (
                 <span
-                  className={cn('my-1 w-px flex-1', step.state === 'done' ? 'bg-primary' : 'bg-border')}
+                  className={cn(
+                    'my-1 w-px flex-1',
+                    step.state === 'done' ? 'bg-primary' : 'bg-border',
+                  )}
                   aria-hidden
                 />
               )}
@@ -45,7 +48,7 @@ export function OrderTimeline({ status }: { status: OrderStatus | null }) {
               className={cn(
                 'pb-5 text-sm',
                 step.state === 'upcoming' && 'text-muted-foreground',
-                step.state === 'cancelled' && 'text-destructive font-medium',
+                step.state === 'cancelled' && 'font-medium text-destructive',
                 (step.state === 'done' || step.state === 'current') && 'font-medium',
               )}
             >

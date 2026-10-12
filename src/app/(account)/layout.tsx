@@ -23,7 +23,9 @@ export default function AccountLayout({ children }: LayoutProps<'/'>) {
             <SectionNav items={[...NAV]} label="Account" />
           </Suspense>
         </aside>
-        <main id="main" tabIndex={-1} className="min-w-0 outline-none">{children}</main>
+        <main id="main" tabIndex={-1} className="min-w-0 outline-none">
+          {children}
+        </main>
       </div>
       <SiteFooter />
     </>

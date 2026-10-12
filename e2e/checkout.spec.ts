@@ -27,9 +27,13 @@ test.describe('checkout and orders', () => {
 
     // 201 → order page, status goes PENDING → CONFIRMED without a reload.
     await expect(page).toHaveURL(/\/orders\/[0-9a-f-]{36}$/);
-    await expect(page.getByTestId('order-status').filter({ visible: true })).toHaveAttribute('data-status', 'CONFIRMED', {
-      timeout: 30_000,
-    });
+    await expect(page.getByTestId('order-status').filter({ visible: true })).toHaveAttribute(
+      'data-status',
+      'CONFIRMED',
+      {
+        timeout: 30_000,
+      },
+    );
     await expect(page.getByTestId('order-total')).toHaveText(total);
     await expect(page.getByTestId('order-item')).toContainText('French Press — 1L');
     await expect(page.getByText('221B Baker Street').filter({ visible: true })).toBeVisible();
@@ -47,7 +51,10 @@ test.describe('checkout and orders', () => {
     await page.getByRole('button', { name: 'Cancel order' }).click();
     await page.getByLabel('Reason (optional)').fill('Changed my mind');
     await page.getByRole('dialog').getByRole('button', { name: 'Cancel order' }).click();
-    await expect(page.getByTestId('order-status').filter({ visible: true })).toHaveAttribute('data-status', 'CANCELLED');
+    await expect(page.getByTestId('order-status').filter({ visible: true })).toHaveAttribute(
+      'data-status',
+      'CANCELLED',
+    );
     await expect(page.getByRole('button', { name: 'Cancel order' })).toHaveCount(0);
   });
 
@@ -75,9 +82,13 @@ test.describe('checkout and orders', () => {
     await page.getByRole('button', { name: 'Place order' }).click();
 
     await expect(page).toHaveURL(/\/orders\/[0-9a-f-]{36}$/);
-    await expect(page.getByTestId('order-status').filter({ visible: true })).toHaveAttribute('data-status', 'CANCELLED', {
-      timeout: 30_000,
-    });
+    await expect(page.getByTestId('order-status').filter({ visible: true })).toHaveAttribute(
+      'data-status',
+      'CANCELLED',
+      {
+        timeout: 30_000,
+      },
+    );
     await expect(page.getByText(/This order was cancelled/)).toBeVisible();
     await expect(page.getByRole('link', { name: 'Back to your cart' })).toBeVisible();
   });

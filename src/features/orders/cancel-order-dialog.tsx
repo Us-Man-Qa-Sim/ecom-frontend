@@ -59,9 +59,7 @@ export function CancelOrderDialog({ orderId, onCancelled }: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Cancel this order?</DialogTitle>
-          <DialogDescription>
-            Reserved stock is released. This cannot be undone.
-          </DialogDescription>
+          <DialogDescription>Reserved stock is released. This cannot be undone.</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-2">
           <FormAlert
@@ -77,7 +75,7 @@ export function CancelOrderDialog({ orderId, onCancelled }: Props) {
             placeholder="Changed my mind"
             onChange={(event) => setReason(event.target.value)}
           />
-          <p className="text-muted-foreground text-xs" aria-live="polite">
+          <p className="text-xs text-muted-foreground" aria-live="polite">
             {reason.length}/{CANCEL_REASON_MAX}
           </p>
         </div>

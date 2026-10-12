@@ -139,7 +139,7 @@ export function ProductForm({ product }: { product?: Product }) {
         </div>
 
         {product ? (
-          <p className="text-muted-foreground text-sm">
+          <p className="text-sm text-muted-foreground">
             Stock: {product.stock?.available ?? 0} available, {product.stock?.reserved ?? 0}{' '}
             reserved. Use “Adjust stock” in the product list to change it.
           </p>
@@ -155,7 +155,9 @@ export function ProductForm({ product }: { product?: Product }) {
         <fieldset className="flex flex-col gap-3">
           <legend className="mb-1 text-sm font-medium">Attributes</legend>
           {attributes.fields.length === 0 ? (
-            <p className="text-muted-foreground text-sm">No attributes, for example color or size.</p>
+            <p className="text-sm text-muted-foreground">
+              No attributes, for example color or size.
+            </p>
           ) : null}
           {attributes.fields.map((row, index) => {
             const rowErrors = errors.attributes?.[index];
@@ -214,7 +216,7 @@ export function ProductForm({ product }: { product?: Product }) {
             return (
               <div key={row.id} className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                  <div className="bg-muted size-10 shrink-0 overflow-hidden rounded-md border">
+                  <div className="size-10 shrink-0 overflow-hidden rounded-md border bg-muted">
                     {isHttpUrl(url) ? (
                       // A plain <img>: the preview must work for any host, before it is saved.
                       // eslint-disable-next-line @next/next/no-img-element
@@ -265,12 +267,12 @@ export function ProductForm({ product }: { product?: Product }) {
             <input
               id={ids.active}
               type="checkbox"
-              className="accent-primary mt-0.5 size-4"
+              className="mt-0.5 size-4 accent-primary"
               {...form.register('isActive')}
             />
             <span>
               Active
-              <span className="text-muted-foreground block">
+              <span className="block text-muted-foreground">
                 Inactive products are hidden from the shop and cannot be ordered.
               </span>
             </span>

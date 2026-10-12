@@ -49,7 +49,7 @@ async function Orders({ searchParams }: Pick<PageProps<'/orders'>, 'searchParams
 
       {orders.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed px-4 py-16 text-center">
-          <PackageIcon className="text-muted-foreground size-8" aria-hidden />
+          <PackageIcon className="size-8 text-muted-foreground" aria-hidden />
           <p className="font-medium">{status ? 'No orders with this status' : 'No orders yet'}</p>
           {status ? null : (
             <Button asChild>
@@ -65,13 +65,13 @@ async function Orders({ searchParams }: Pick<PageProps<'/orders'>, 'searchParams
               <li key={order.id} data-testid="order-row">
                 <Link
                   href={`/orders/${order.id}`}
-                  className="hover:bg-muted/50 flex flex-col gap-2 rounded-lg border p-4 transition-colors sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-2 rounded-lg border p-4 transition-colors hover:bg-muted/50 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="flex min-w-0 flex-col gap-1">
                     <p className="truncate text-sm font-medium">
                       {order.items.map((item) => item.productName).join(', ') || 'Order'}
                     </p>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                       {formatDateTime(order.createdAt)} · {units} {units === 1 ? 'item' : 'items'}
                     </p>
                   </div>

@@ -45,7 +45,7 @@ export function CartButton() {
         <ShoppingCartIcon className="size-5" />
         {count > 0 ? (
           <span
-            className="bg-primary text-primary-foreground absolute -top-0.5 -right-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full px-1 text-[0.65rem] leading-none font-semibold"
+            className="absolute -top-0.5 -right-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-primary px-1 text-[0.65rem] leading-none font-semibold text-primary-foreground"
             data-testid="cart-count"
             aria-hidden
           >

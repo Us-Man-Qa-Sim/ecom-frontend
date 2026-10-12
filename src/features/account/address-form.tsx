@@ -122,7 +122,7 @@ export function AddressForm({ address, forceDefault, submitLabel, onSaved, onCan
             <input
               id={defaultId}
               type="checkbox"
-              className="accent-primary size-4"
+              className="size-4 accent-primary"
               {...form.register('isDefault')}
             />
             Use as my default address

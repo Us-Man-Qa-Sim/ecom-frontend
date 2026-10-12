@@ -87,15 +87,19 @@ describe('admin product actions', () => {
   });
 
   it.each([
-    ['create', () => actions.createProductAction({
-      name: 'Blue Mug',
-      description: 'A mug.',
-      category: 'home',
-      price: { amountMinor: 1299, currency: 'USD' },
-      initialStock: 5,
-      attributes: {},
-      images: [],
-    })],
+    [
+      'create',
+      () =>
+        actions.createProductAction({
+          name: 'Blue Mug',
+          description: 'A mug.',
+          category: 'home',
+          price: { amountMinor: 1299, currency: 'USD' },
+          initialStock: 5,
+          attributes: {},
+          images: [],
+        }),
+    ],
     ['update', () => actions.updateProductAction(productId, { isActive: false })],
     ['adjust stock', () => actions.adjustStockAction(productId, -2)],
     ['delete', () => actions.deleteProductAction(productId)],
@@ -166,7 +170,10 @@ describe('AdminOrderLive buttons follow the state machine', () => {
     ['DELIVERED', { ship: false, deliver: false, cancel: false }],
     ['CANCELLED', { ship: false, deliver: false, cancel: false }],
   ] as const)('%s', (status, expected) => {
-    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ order: order(status) })));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => Response.json({ order: order(status) })),
+    );
     view(status);
 
     const has = (name: string) => screen.queryByRole('button', { name }) !== null;

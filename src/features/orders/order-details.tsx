@@ -4,7 +4,13 @@ import type { Order } from '@/lib/api/types';
 import { formatMoney, multiplyMoney } from '@/lib/money';
 
 /** Items and shipping address as they were when the order was placed (snapshots). */
-export function OrderDetails({ order, linkProducts = true }: { order: Order; linkProducts?: boolean }) {
+export function OrderDetails({
+  order,
+  linkProducts = true,
+}: {
+  order: Order;
+  linkProducts?: boolean;
+}) {
   return (
     <div className="flex flex-col gap-6">
       <section aria-labelledby="items-heading" className="flex flex-col gap-3">
@@ -13,10 +19,17 @@ export function OrderDetails({ order, linkProducts = true }: { order: Order; lin
         </h2>
         <ul className="divide-y rounded-lg border text-sm">
           {order.items.map((item) => (
-            <li key={item.id} className="flex items-start justify-between gap-3 p-3" data-testid="order-item">
+            <li
+              key={item.id}
+              className="flex items-start justify-between gap-3 p-3"
+              data-testid="order-item"
+            >
               <div className="min-w-0">
                 {linkProducts ? (
-                  <Link href={`/products/${item.productId}`} className="font-medium hover:underline">
+                  <Link
+                    href={`/products/${item.productId}`}
+                    className="font-medium hover:underline"
+                  >
                     {item.productName}
                   </Link>
                 ) : (
@@ -36,7 +49,7 @@ export function OrderDetails({ order, linkProducts = true }: { order: Order; lin
             <span data-testid="order-total">{formatMoney(order.total)}</span>
           </li>
         </ul>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-xs text-muted-foreground">
           Names and prices are the ones from the moment you ordered.
         </p>
       </section>
@@ -50,7 +63,7 @@ export function OrderDetails({ order, linkProducts = true }: { order: Order; lin
             <AddressLines address={order.shippingAddress} />
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm">No address on this order.</p>
+          <p className="text-sm text-muted-foreground">No address on this order.</p>
         )}
       </section>
     </div>

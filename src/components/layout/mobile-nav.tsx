@@ -36,12 +36,14 @@ export function MobileNav({ search }: { search: ReactNode }) {
       >
         <MenuIcon className="size-5" />
       </Button>
-      {loaded ? <MobileNavSheet
+      {loaded ? (
+        <MobileNavSheet
           open={open}
           onOpenChange={setOpen}
           search={search}
           returnFocusRef={buttonRef}
-        /> : null}
+        />
+      ) : null}
     </>
   );
 }

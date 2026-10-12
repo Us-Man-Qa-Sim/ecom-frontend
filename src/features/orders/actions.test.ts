@@ -96,7 +96,10 @@ describe('cancelOrderAction', () => {
 
   it('rejects a reason over 500 characters', async () => {
     const result = await cancelOrderAction(orderId, { reason: 'x'.repeat(501) });
-    expect(result).toMatchObject({ ok: false, fieldErrors: { reason: 'Use at most 500 characters' } });
+    expect(result).toMatchObject({
+      ok: false,
+      fieldErrors: { reason: 'Use at most 500 characters' },
+    });
     expect(gateway.POST).not.toHaveBeenCalled();
   });
 

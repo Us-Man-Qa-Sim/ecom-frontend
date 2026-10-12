@@ -23,7 +23,8 @@ export function LazyToaster() {
       ? window.requestIdleCallback(mount, { timeout: 2000 })
       : window.setTimeout(mount, 200);
     const events = ['pointerdown', 'keydown'] as const;
-    for (const event of events) window.addEventListener(event, mount, { once: true, capture: true });
+    for (const event of events)
+      window.addEventListener(event, mount, { once: true, capture: true });
 
     return () => {
       if (hasIdleCallback) window.cancelIdleCallback(handle);

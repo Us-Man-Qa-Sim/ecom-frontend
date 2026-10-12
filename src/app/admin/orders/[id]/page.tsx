@@ -18,7 +18,7 @@ export default function AdminOrderPage({ params }: PageProps<'/admin/orders/[id]
     <div className="flex flex-col gap-6">
       <Link
         href="/admin/orders"
-        className="text-muted-foreground hover:text-foreground flex w-fit items-center gap-1 text-sm"
+        className="flex w-fit items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ChevronLeftIcon className="size-4" aria-hidden /> All orders
       </Link>
@@ -40,8 +40,8 @@ async function AdminOrder({ params }: Pick<PageProps<'/admin/orders/[id]'>, 'par
     <>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold tracking-tight">Order</h1>
-        <p className="text-muted-foreground font-mono text-xs break-all">{order.id}</p>
-        <p className="text-muted-foreground text-sm">
+        <p className="font-mono text-xs break-all text-muted-foreground">{order.id}</p>
+        <p className="text-sm text-muted-foreground">
           Placed {formatDateTime(order.createdAt)} by{' '}
           <Link
             href={{ pathname: '/admin/orders', query: { userId: order.userId } }}

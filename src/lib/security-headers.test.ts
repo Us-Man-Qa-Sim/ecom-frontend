@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { contentSecurityPolicy, securityHeaders } from './security-headers';
 
-const production = { imageHosts: ['cdn.example.com', 'placehold.co'], https: true, development: false };
+const production = {
+  imageHosts: ['cdn.example.com', 'placehold.co'],
+  https: true,
+  development: false,
+};
 
 function directives(policy: string): Record<string, string> {
   return Object.fromEntries(

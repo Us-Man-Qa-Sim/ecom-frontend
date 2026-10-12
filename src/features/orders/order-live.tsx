@@ -41,13 +41,15 @@ export function OrderLive({ order: initial, renderActions, showCartHint = true }
             confirmed.
           </p>
         ) : null}
-        {order.status === 'CONFIRMED' ? <p>Your items are reserved. We will ship them soon.</p> : null}
+        {order.status === 'CONFIRMED' ? (
+          <p>Your items are reserved. We will ship them soon.</p>
+        ) : null}
         {order.status === 'SHIPPED' ? <p>Your order is on its way.</p> : null}
         {order.status === 'DELIVERED' ? <p>Your order was delivered.</p> : null}
         {order.status === 'CANCELLED' ? (
           <p>
-            This order was cancelled. If you did not cancel it yourself, an item was probably out
-            of stock.
+            This order was cancelled. If you did not cancel it yourself, an item was probably out of
+            stock.
             {showCartHint ? (
               <>
                 {' '}
@@ -60,7 +62,7 @@ export function OrderLive({ order: initial, renderActions, showCartHint = true }
           </p>
         ) : null}
         {error && isPolling ? (
-          <p className="text-muted-foreground mt-1">
+          <p className="mt-1 text-muted-foreground">
             The status could not be refreshed. Trying again…
           </p>
         ) : null}

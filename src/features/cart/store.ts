@@ -62,8 +62,7 @@ export const useCartStore = create<CartState>()(
       // Stored data is never trusted: it is validated with zod, bad data means an empty cart.
       merge: (persisted, current) => ({
         ...current,
-        lines:
-          validateStoredLines?.((persisted as { lines?: unknown } | undefined)?.lines) ?? [],
+        lines: validateStoredLines?.((persisted as { lines?: unknown } | undefined)?.lines) ?? [],
       }),
       migrate: (persisted) => persisted as { lines: CartLine[] },
       onRehydrateStorage: () => () => {

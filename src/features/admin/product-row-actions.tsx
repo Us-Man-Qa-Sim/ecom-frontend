@@ -117,7 +117,8 @@ export function AdjustStockDialog({ product, onClose, returnFocusRef }: RowDialo
   let hint = 'Use a negative number to remove stock, for example -3.';
   if (input.trim() && delta === null) hint = 'Enter a whole number, for example 10 or -3.';
   else if (delta === 0) hint = 'Enter a number other than 0.';
-  else if (result !== null && result < 0) hint = `Only ${available} available. The stock cannot go below 0.`;
+  else if (result !== null && result < 0)
+    hint = `Only ${available} available. The stock cannot go below 0.`;
 
   const submit = () => {
     if (invalid || delta === null) return;
@@ -149,17 +150,17 @@ export function AdjustStockDialog({ product, onClose, returnFocusRef }: RowDialo
           <FormAlert message={error?.message} requestId={error?.requestId} />
           <dl className="grid grid-cols-3 gap-2 text-center text-sm">
             <div className="rounded-lg border p-2">
-              <dt className="text-muted-foreground text-xs">Available now</dt>
+              <dt className="text-xs text-muted-foreground">Available now</dt>
               <dd className="text-lg font-semibold">{available}</dd>
             </div>
             <div className="rounded-lg border p-2">
-              <dt className="text-muted-foreground text-xs">Change</dt>
+              <dt className="text-xs text-muted-foreground">Change</dt>
               <dd className="text-lg font-semibold">
                 {delta === null ? '—' : delta > 0 ? `+${delta}` : delta}
               </dd>
             </div>
             <div className="rounded-lg border p-2">
-              <dt className="text-muted-foreground text-xs">After</dt>
+              <dt className="text-xs text-muted-foreground">After</dt>
               <dd className="text-lg font-semibold" data-testid="stock-after">
                 {result === null || result < 0 ? '—' : result}
               </dd>
@@ -176,7 +177,7 @@ export function AdjustStockDialog({ product, onClose, returnFocusRef }: RowDialo
             aria-describedby={`${inputId}-hint`}
             onChange={(event) => setInput(event.target.value)}
           />
-          <p id={`${inputId}-hint`} className="text-muted-foreground text-sm" aria-live="polite">
+          <p id={`${inputId}-hint`} className="text-sm text-muted-foreground" aria-live="polite">
             {hint}
           </p>
           <DialogFooter>
@@ -229,14 +230,19 @@ export function DeleteProductDialog({ product, onClose, returnFocusRef }: RowDia
         <DialogHeader>
           <DialogTitle>Delete “{product.name}”?</DialogTitle>
           <DialogDescription>
-            This removes the product for good. It cannot be undone. Deactivating is usually
-            better: the product disappears from the shop but can be turned back on.
+            This removes the product for good. It cannot be undone. Deactivating is usually better:
+            the product disappears from the shop but can be turned back on.
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-3">
           <FormAlert message={error?.message} requestId={error?.requestId} />
           {product.isActive ? (
-            <Button variant="outline" onClick={deactivate} disabled={pending} className="self-start">
+            <Button
+              variant="outline"
+              onClick={deactivate}
+              disabled={pending}
+              className="self-start"
+            >
               Deactivate instead
             </Button>
           ) : null}

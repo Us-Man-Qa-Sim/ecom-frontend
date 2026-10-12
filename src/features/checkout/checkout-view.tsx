@@ -54,7 +54,7 @@ export function CheckoutView({ addresses: initialAddresses }: { addresses: Addre
     return (
       <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed px-4 py-16 text-center">
         <p className="font-medium">Your cart is empty</p>
-        <p className="text-muted-foreground text-sm">Add something before you check out.</p>
+        <p className="text-sm text-muted-foreground">Add something before you check out.</p>
         <Button asChild>
           <Link href="/products">Browse products</Link>
         </Button>
@@ -97,11 +97,15 @@ export function CheckoutView({ addresses: initialAddresses }: { addresses: Addre
           </h2>
 
           {addresses.length === 0 && !adding ? (
-            <p className="text-muted-foreground text-sm">You have no saved addresses yet.</p>
+            <p className="text-sm text-muted-foreground">You have no saved addresses yet.</p>
           ) : null}
 
           {addresses.length > 0 ? (
-            <div role="radiogroup" aria-labelledby="address-heading" className="grid gap-3 sm:grid-cols-2">
+            <div
+              role="radiogroup"
+              aria-labelledby="address-heading"
+              className="grid gap-3 sm:grid-cols-2"
+            >
               {addresses.map((address) => {
                 const selected = address.id === selectedId;
                 return (
@@ -109,13 +113,13 @@ export function CheckoutView({ addresses: initialAddresses }: { addresses: Addre
                     key={address.id}
                     className={cn(
                       'flex cursor-pointer gap-3 rounded-lg border p-3',
-                      selected ? 'border-primary ring-primary/30 ring-2' : 'hover:bg-muted/50',
+                      selected ? 'border-primary ring-2 ring-primary/30' : 'hover:bg-muted/50',
                     )}
                   >
                     <input
                       type="radio"
                       name="address"
-                      className="accent-primary mt-1 size-4"
+                      className="mt-1 size-4 accent-primary"
                       checked={selected}
                       onChange={() => setSelectedId(address.id)}
                     />
@@ -181,7 +185,10 @@ export function CheckoutView({ addresses: initialAddresses }: { addresses: Addre
               </li>
             ))}
           </ul>
-          <Link href="/cart" className="text-muted-foreground w-fit text-sm underline underline-offset-4">
+          <Link
+            href="/cart"
+            className="w-fit text-sm text-muted-foreground underline underline-offset-4"
+          >
             Edit cart
           </Link>
         </section>
@@ -211,20 +218,20 @@ export function CheckoutView({ addresses: initialAddresses }: { addresses: Addre
           requestId={error?.requestId}
         />
         {blocked ? (
-          <p className="text-destructive text-sm" role="alert">
+          <p className="text-sm text-destructive" role="alert">
             Remove the out-of-stock items in your cart to continue.
           </p>
         ) : null}
         <Button size="lg" onClick={placeOrder} disabled={!canPlace} aria-busy={pending}>
           {pending || placed ? 'Placing order…' : 'Place order'}
         </Button>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-xs text-muted-foreground">
           {isChecking
             ? 'Checking prices and stock…'
             : 'No payment is taken. Stock is reserved after you place the order.'}
         </p>
         {!selectedId && !adding ? (
-          <p className="text-muted-foreground text-sm">Choose a shipping address to continue.</p>
+          <p className="text-sm text-muted-foreground">Choose a shipping address to continue.</p>
         ) : null}
       </aside>
     </div>

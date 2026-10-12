@@ -113,6 +113,9 @@ describe('OrderLive', () => {
   it('explains a cancelled order and links back to the cart', () => {
     renderLive('CANCELLED');
     expect(screen.getByText(/This order was cancelled/)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Back to your cart' })).toHaveAttribute('href', '/cart');
+    expect(screen.getByRole('link', { name: 'Back to your cart' })).toHaveAttribute(
+      'href',
+      '/cart',
+    );
   });
 });

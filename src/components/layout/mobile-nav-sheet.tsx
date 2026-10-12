@@ -54,7 +54,7 @@ export default function MobileNavSheet({ open, onOpenChange, search, returnFocus
                 key={category.slug}
                 href={{ pathname: '/products', query: { category: category.slug } }}
                 onClick={close}
-                className={`${linkClass} text-muted-foreground pl-6`}
+                className={`${linkClass} pl-6 text-muted-foreground`}
               >
                 {category.label}
               </Link>

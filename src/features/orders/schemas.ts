@@ -21,10 +21,7 @@ export type PlaceOrderInput = z.infer<typeof placeOrderSchema>;
 export const CANCEL_REASON_MAX = 500;
 
 export const cancelOrderSchema = z.object({
-  reason: z
-    .string()
-    .trim()
-    .max(CANCEL_REASON_MAX, `Use at most ${CANCEL_REASON_MAX} characters`),
+  reason: z.string().trim().max(CANCEL_REASON_MAX, `Use at most ${CANCEL_REASON_MAX} characters`),
 });
 
 export type CancelOrderInput = z.infer<typeof cancelOrderSchema>;

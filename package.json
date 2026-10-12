@@ -10,13 +10,15 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "next typegen \u0026\u0026 tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "e2e": "playwright test",
     "gen:api": "node scripts/gen-api.mjs",
-    "gen:api:check": "node scripts/gen-api.mjs --check"
+    "gen:api:check": "node scripts/gen-api.mjs --check",
+    "ci": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run gen:api:check && npm run build",
+    "docker:build": "docker build -t ecom-frontend:local ."
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",
@@ -71,6 +73,6 @@
     }
   },
   "engines": {
-    "node": "\u003e=24.21.0 \u003c25"
+    "node": ">=24.21.0 <25"
   }
 }

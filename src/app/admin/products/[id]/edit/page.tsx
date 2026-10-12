@@ -30,7 +30,7 @@ async function EditProduct({ params }: Pick<PageProps<'/admin/products/[id]/edit
   return (
     <>
       <div className="flex flex-wrap items-center gap-2">
-        <p className="text-muted-foreground font-mono text-xs break-all">{product.id}</p>
+        <p className="font-mono text-xs break-all text-muted-foreground">{product.id}</p>
         {product.isActive ? null : <Badge variant="outline">Inactive</Badge>}
       </div>
       <ProductForm key={product.updatedAt ?? product.id} product={product} />

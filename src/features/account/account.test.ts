@@ -89,10 +89,15 @@ describe('address actions', () => {
 
   it('create passes gateway field errors through', async () => {
     gateway.POST.mockRejectedValue(
-      gatewayError(400, 'postalCode: invalid', [{ field: 'postalCode', errors: ['postalCode is invalid'] }]),
+      gatewayError(400, 'postalCode: invalid', [
+        { field: 'postalCode', errors: ['postalCode is invalid'] },
+      ]),
     );
     const result = await createAddressAction(valid);
-    expect(result).toMatchObject({ ok: false, fieldErrors: { postalCode: 'postalCode is invalid' } });
+    expect(result).toMatchObject({
+      ok: false,
+      fieldErrors: { postalCode: 'postalCode is invalid' },
+    });
   });
 
   it("update of another user's address reports not found (the gateway answers 404)", async () => {

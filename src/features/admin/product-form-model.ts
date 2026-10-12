@@ -24,11 +24,7 @@ export const PRODUCT_LIMITS = {
 // ── Form values (strings, as typed) ──
 
 const text = (label: string, max: number) =>
-  z
-    .string()
-    .trim()
-    .min(1, `Enter ${label}`)
-    .max(max, `Use at most ${max} characters`);
+  z.string().trim().min(1, `Enter ${label}`).max(max, `Use at most ${max} characters`);
 
 export const productFormSchema = z
   .object({

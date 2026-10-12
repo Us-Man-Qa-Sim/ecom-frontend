@@ -9,7 +9,11 @@ type Props = { name: string; firstName: string; email: string; isAdmin: boolean 
 
 const loadContent = () => import('./user-menu-content');
 
-function Trigger({ name, firstName, ...props }: ComponentProps<typeof Button> & Pick<Props, 'name' | 'firstName'>) {
+function Trigger({
+  name,
+  firstName,
+  ...props
+}: ComponentProps<typeof Button> & Pick<Props, 'name' | 'firstName'>) {
   return (
     <Button
       variant="ghost"

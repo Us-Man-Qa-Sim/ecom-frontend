@@ -71,7 +71,8 @@ export function timelineSteps(status: OrderStatus | null): TimelineStep[] {
       else if (index === reached + 1) state = 'current';
       return {
         key: step,
-        label: step === 'CONFIRMED' && state === 'current' ? 'Reserving stock' : STATUS_LABELS[step],
+        label:
+          step === 'CONFIRMED' && state === 'current' ? 'Reserving stock' : STATUS_LABELS[step],
         state,
       };
     }),

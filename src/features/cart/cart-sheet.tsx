@@ -50,8 +50,8 @@ export default function CartSheet({ open, onOpenChange, returnFocusRef }: Props)
 
         {lines.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 text-center">
-            <ShoppingCartIcon className="text-muted-foreground size-8" aria-hidden />
-            <p className="text-muted-foreground text-sm">Your cart is empty.</p>
+            <ShoppingCartIcon className="size-8 text-muted-foreground" aria-hidden />
+            <p className="text-sm text-muted-foreground">Your cart is empty.</p>
             <Button asChild onClick={close}>
               <Link href="/products">Browse products</Link>
             </Button>
@@ -80,7 +80,7 @@ export default function CartSheet({ open, onOpenChange, returnFocusRef }: Props)
                     </p>
                     <button
                       type="button"
-                      className="text-muted-foreground hover:text-foreground self-start text-xs underline underline-offset-2"
+                      className="self-start text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
                       onClick={() => remove(line.productId)}
                       aria-label={`Remove ${line.snapshot.name}`}
                     >

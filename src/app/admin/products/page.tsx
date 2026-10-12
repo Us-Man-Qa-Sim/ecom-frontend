@@ -112,7 +112,7 @@ async function ProductsTable({ searchParams }: Pick<PageProps<'/admin/products'>
         </Button>
       </form>
 
-      <div className="bg-muted flex flex-col gap-2 rounded-lg p-3 text-sm">
+      <div className="flex flex-col gap-2 rounded-lg bg-muted p-3 text-sm">
         <p>
           This list shows <strong>active products only</strong>. The backend has no admin product
           list yet (GAP-3). To edit or reactivate a deactivated product, open it by its ID.
@@ -142,7 +142,7 @@ async function ProductsTable({ searchParams }: Pick<PageProps<'/admin/products'>
       </div>
 
       {products.length === 0 ? (
-        <p className="text-muted-foreground rounded-lg border border-dashed px-4 py-12 text-center">
+        <p className="rounded-lg border border-dashed px-4 py-12 text-center text-muted-foreground">
           No active products match.
         </p>
       ) : (
@@ -173,7 +173,9 @@ async function ProductsTable({ searchParams }: Pick<PageProps<'/admin/products'>
                     >
                       {product.name}
                     </Link>
-                    <p className="text-muted-foreground font-mono text-xs break-all">{product.id}</p>
+                    <p className="font-mono text-xs break-all text-muted-foreground">
+                      {product.id}
+                    </p>
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     {categoryLabel(product.category)}

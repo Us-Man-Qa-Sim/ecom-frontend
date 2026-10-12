@@ -87,7 +87,9 @@ describe('toUpdateBody sends only the changed fields', () => {
   });
 
   it('sends one field for one change', () => {
-    expect(toUpdateBody(product, { ...unchanged, name: 'Green Mug' })).toEqual({ name: 'Green Mug' });
+    expect(toUpdateBody(product, { ...unchanged, name: 'Green Mug' })).toEqual({
+      name: 'Green Mug',
+    });
     expect(toUpdateBody(product, { ...unchanged, isActive: false })).toEqual({ isActive: false });
   });
 
@@ -149,9 +151,9 @@ describe('productFormSchema', () => {
     expect(parse({ ...values, images: Array.from({ length: 20 }, (_, i) => url(i)) }).success).toBe(
       true,
     );
-    expect(issuePaths({ ...values, images: Array.from({ length: 21 }, (_, i) => url(i)) })).toContain(
-      'images',
-    );
+    expect(
+      issuePaths({ ...values, images: Array.from({ length: 21 }, (_, i) => url(i)) }),
+    ).toContain('images');
     expect(issuePaths({ ...values, images: [{ url: 'javascript:alert(1)' }] })).toContain(
       'images.0.url',
     );

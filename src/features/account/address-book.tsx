@@ -44,7 +44,7 @@ export function AddressBook({ addresses }: { addresses: Address[] }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-muted-foreground text-sm">
+        <p className="text-sm text-muted-foreground">
           {addresses.length === 0
             ? 'You have no saved addresses yet.'
             : `${addresses.length} saved ${addresses.length === 1 ? 'address' : 'addresses'}`}
@@ -56,8 +56,8 @@ export function AddressBook({ addresses }: { addresses: Address[] }) {
 
       {addresses.length === 0 ? (
         <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-12 text-center">
-          <MapPinIcon className="text-muted-foreground size-8" aria-hidden />
-          <p className="text-muted-foreground text-sm">Add an address to check out faster.</p>
+          <MapPinIcon className="size-8 text-muted-foreground" aria-hidden />
+          <p className="text-sm text-muted-foreground">Add an address to check out faster.</p>
         </div>
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2" aria-label="Saved addresses">

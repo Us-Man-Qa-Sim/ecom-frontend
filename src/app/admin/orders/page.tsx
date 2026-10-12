@@ -91,13 +91,13 @@ async function OrdersTable({ searchParams }: Pick<PageProps<'/admin/orders'>, 's
         ) : null}
       </form>
       {userIdInput && !userId ? (
-        <p role="alert" className="text-destructive text-sm">
+        <p role="alert" className="text-sm text-destructive">
           A customer ID is a UUID. The filter was ignored.
         </p>
       ) : null}
 
       {orders.length === 0 ? (
-        <p className="text-muted-foreground rounded-lg border border-dashed px-4 py-12 text-center">
+        <p className="rounded-lg border border-dashed px-4 py-12 text-center text-muted-foreground">
           No orders match.
         </p>
       ) : (
@@ -127,7 +127,7 @@ async function OrdersTable({ searchParams }: Pick<PageProps<'/admin/orders'>, 's
                   <TableCell className="hidden md:table-cell">
                     <Link
                       href={ordersHref(status, order.userId)}
-                      className="text-muted-foreground font-mono text-xs hover:underline"
+                      className="font-mono text-xs text-muted-foreground hover:underline"
                       title={`Only orders of ${order.userId}`}
                     >
                       {shortId(order.userId)}

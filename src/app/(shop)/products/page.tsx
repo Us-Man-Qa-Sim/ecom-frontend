@@ -23,26 +23,26 @@ export const metadata: Metadata = {
 export default function ProductsPage({ searchParams }: PageProps<'/products'>) {
   return (
     <NuqsAdapter>
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Products</h1>
-        <Suspense>
-          <MobileFilters />
-        </Suspense>
-      </div>
-      <div className="grid gap-8 lg:grid-cols-[14rem_1fr]">
-        <aside className="hidden lg:block" aria-label="Filters">
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center justify-between gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight">Products</h1>
           <Suspense>
-            <CatalogFilters />
+            <MobileFilters />
           </Suspense>
-        </aside>
-        <section aria-label="Results" className="min-w-0">
-          <Suspense fallback={<ProductGridSkeleton count={12} />}>
-            <Results searchParams={searchParams} />
-          </Suspense>
-        </section>
+        </div>
+        <div className="grid gap-8 lg:grid-cols-[14rem_1fr]">
+          <aside className="hidden lg:block" aria-label="Filters">
+            <Suspense>
+              <CatalogFilters />
+            </Suspense>
+          </aside>
+          <section aria-label="Results" className="min-w-0">
+            <Suspense fallback={<ProductGridSkeleton count={12} />}>
+              <Results searchParams={searchParams} />
+            </Suspense>
+          </section>
+        </div>
       </div>
-    </div>
     </NuqsAdapter>
   );
 }

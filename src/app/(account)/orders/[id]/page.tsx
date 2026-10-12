@@ -18,7 +18,7 @@ export default function OrderPage({ params }: PageProps<'/orders/[id]'>) {
     <div className="flex flex-col gap-6">
       <Link
         href="/orders"
-        className="text-muted-foreground hover:text-foreground flex w-fit items-center gap-1 text-sm"
+        className="flex w-fit items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ChevronLeftIcon className="size-4" aria-hidden /> All orders
       </Link>
@@ -39,10 +39,10 @@ async function OrderContent({ params }: Pick<PageProps<'/orders/[id]'>, 'params'
     <>
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-semibold tracking-tight">Order</h1>
-        <p className="text-muted-foreground font-mono text-xs break-all" data-testid="order-id">
+        <p className="font-mono text-xs break-all text-muted-foreground" data-testid="order-id">
           {order.id}
         </p>
-        <p className="text-muted-foreground text-sm">Placed {formatDateTime(order.createdAt)}</p>
+        <p className="text-sm text-muted-foreground">Placed {formatDateTime(order.createdAt)}</p>
       </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
         <OrderDetails order={order} />

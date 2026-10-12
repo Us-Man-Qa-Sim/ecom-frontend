@@ -25,8 +25,8 @@ export default function UserMenuContent({ trigger, name, email, isAdmin }: Props
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span className="text-foreground truncate font-medium">{name}</span>
-          <span className="text-muted-foreground truncate text-xs font-normal">{email}</span>
+          <span className="truncate font-medium text-foreground">{name}</span>
+          <span className="truncate text-xs font-normal text-muted-foreground">{email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

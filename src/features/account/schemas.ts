@@ -5,11 +5,7 @@ import { COUNTRY_CODES } from './countries';
 export const ADDRESS_LIMITS = { label: 50, street: 200, city: 100, state: 100, postalCode: 20 };
 
 const required = (label: string, max: number) =>
-  z
-    .string()
-    .trim()
-    .min(1, `Enter ${label}`)
-    .max(max, `Use at most ${max} characters`);
+  z.string().trim().min(1, `Enter ${label}`).max(max, `Use at most ${max} characters`);
 const optional = (max: number) => z.string().trim().max(max, `Use at most ${max} characters`);
 
 export const addressSchema = z.object({
@@ -18,9 +14,7 @@ export const addressSchema = z.object({
   city: required('a city', ADDRESS_LIMITS.city),
   state: optional(ADDRESS_LIMITS.state),
   postalCode: required('a postal code', ADDRESS_LIMITS.postalCode),
-  country: z
-    .string()
-    .refine((code) => COUNTRY_CODES.has(code), 'Choose a country'),
+  country: z.string().refine((code) => COUNTRY_CODES.has(code), 'Choose a country'),
   isDefault: z.boolean(),
 });
 

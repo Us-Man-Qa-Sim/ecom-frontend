@@ -30,7 +30,7 @@ export function StatusFilter({ current, hrefFor }: Props) {
                 className={cn(
                   'block rounded-full border px-3 py-1 text-sm whitespace-nowrap',
                   active
-                    ? 'bg-primary text-primary-foreground border-primary'
+                    ? 'border-primary bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground',
                 )}
               >

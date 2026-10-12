@@ -25,7 +25,11 @@ async function expectNoViolations(page: Page, label: string) {
 
 async function firstProductPath(page: Page) {
   await page.goto('/products');
-  const href = await page.getByTestId('product-card').first().getByRole('link').getAttribute('href');
+  const href = await page
+    .getByTestId('product-card')
+    .first()
+    .getByRole('link')
+    .getAttribute('href');
   return href!;
 }
 

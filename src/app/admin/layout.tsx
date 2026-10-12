@@ -23,7 +23,7 @@ export default function AdminLayout({ children }: LayoutProps<'/admin'>) {
       <SiteHeader />
       <div className="mx-auto grid w-full max-w-6xl flex-1 gap-6 px-4 py-6 md:grid-cols-[12rem_1fr] md:gap-10">
         <aside>
-          <p className="text-muted-foreground mb-2 hidden px-3 text-xs font-medium uppercase md:block">
+          <p className="mb-2 hidden px-3 text-xs font-medium text-muted-foreground uppercase md:block">
             Admin
           </p>
           <Suspense>

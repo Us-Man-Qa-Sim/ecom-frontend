@@ -43,10 +43,10 @@ async function OrderCounts() {
         <li key={status}>
           <Link
             href={{ pathname: '/admin/orders', query: { status } }}
-            className="hover:bg-muted/50 flex flex-col gap-1 rounded-lg border p-4 transition-colors"
+            className="flex flex-col gap-1 rounded-lg border p-4 transition-colors hover:bg-muted/50"
             data-testid={`count-${status}`}
           >
-            <span className="text-muted-foreground text-sm">{STATUS_LABELS[status]}</span>
+            <span className="text-sm text-muted-foreground">{STATUS_LABELS[status]}</span>
             <span className="text-2xl font-semibold">{counts[status] ?? '—'}</span>
           </Link>
         </li>
@@ -60,7 +60,7 @@ async function LowStock() {
   const products = await listLowStock();
 
   if (products.length === 0) {
-    return <p className="text-muted-foreground text-sm">Every product has enough stock.</p>;
+    return <p className="text-sm text-muted-foreground">Every product has enough stock.</p>;
   }
   return (
     <ul className="divide-y rounded-lg border text-sm">
@@ -69,7 +69,7 @@ async function LowStock() {
           <Link href={`/admin/products/${product.id}/edit`} className="font-medium hover:underline">
             {product.name}
           </Link>
-          <span className={product.stock?.available ? '' : 'text-destructive font-medium'}>
+          <span className={product.stock?.available ? '' : 'font-medium text-destructive'}>
             {product.stock?.available ?? 0} available · {product.stock?.reserved ?? 0} reserved
           </span>
         </li>

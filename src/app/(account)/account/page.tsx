@@ -49,7 +49,7 @@ async function Profile() {
           </dd>
         </div>
       </dl>
-      <p className="text-muted-foreground text-sm">Profile details cannot be changed yet.</p>
+      <p className="text-sm text-muted-foreground">Profile details cannot be changed yet.</p>
       <div className="flex flex-wrap gap-2">
         <Button asChild variant="outline">
           <Link href="/account/addresses">Manage addresses</Link>
