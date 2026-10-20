@@ -21,7 +21,7 @@
     "docker:build": "docker build -t ecom-frontend:local ."
   },
   "dependencies": {
-    "@hookform/resolvers": "5.9.1",
+    "@hookform/resolvers": "5.9.2",
     "@tanstack/react-query": "5.104.2",
     "class-variance-authority": "0.7.1",
     "cn": "0.4.0",
